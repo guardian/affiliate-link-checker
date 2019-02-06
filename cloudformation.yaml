@@ -48,6 +48,8 @@ Resources:
             Action:
               - s3:PutObject
               - s3:GetObject
+              - s3:PutObjectAcl
+              - s3:GetObjectAcl
             Resource: "arn:aws:s3:::ophan-raw-affiliate-link/*"
         - Statement:
             Effect: Allow
