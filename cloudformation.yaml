@@ -46,10 +46,14 @@ Resources:
         - Statement:
             Effect: Allow
             Action:
-              - s3:ListBucket
               - s3:PutObject
               - s3:GetObject
-            Resource: "arn:aws:s3::*:ophan-raw-affiliate-link" 
+            Resource: "arn:aws:s3:::ophan-raw-affiliate-link/*"
+        - Statement:
+            Effect: Allow
+            Action:
+              - s3:ListBucket
+            Resource: "arn:aws:s3:::ophan-raw-affiliate-link"
       Events:
         DailyRun:
           Type: Schedule
