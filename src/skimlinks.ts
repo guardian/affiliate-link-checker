@@ -14,17 +14,17 @@ const md5 = (s: string): string =>
 
 export const getSkim = async () => {
   const url = `${endpoint}/${accountType}/${accountId}/comission-report`;
-  console.log(sign(url))
-  const r = await fetch(sign(url))
-  const t = await r.text()
-  console.log(t)
+  console.log(sign(url));
+  const r = await fetch(sign(url));
+  const t = await r.text();
+  console.log(t);
 
-  return
+  return;
 };
 
 const sign = (url: string) => {
   const timestamp = moment().unix();
   const token = md5(`${timestamp}${privateKey}`);
-  console.log(token)
+  console.log(token);
   return `${url}?timestamp=${timestamp}&token=${token}`;
 };

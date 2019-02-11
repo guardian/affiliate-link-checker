@@ -1,12 +1,11 @@
 import * as moment from "moment";
 import { capiURL, checkArticleForLinks, getArticles } from "./capi";
+import { getSkim } from "./skimlinks";
 import { upload } from "./upload";
-import { getSkim } from './skimlinks';
 
 export const handler = async (event: { date?: string }): Promise<void> => {
-const a = await getSkim()
-console.log(a)
-
+  const a = await getSkim();
+  console.log(a);
 
   // const date = parseDate(event) || moment().subtract(1, "day");
   // console.log("Lambda initialised for", date.format("YYYY-MM-DD"));
