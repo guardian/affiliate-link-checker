@@ -13,11 +13,16 @@ const md5 = (s: string): string =>
     .digest("hex");
 
 export const getSkim = async () => {
-  const url = `${endpoint}/${accountType}/${accountId}/comission-report`;
-  console.log(sign(url));
+  const url = `${endpoint}/${accountType}/${accountId}/commission-report`;
+  console.log(`${sign(url)}&start_date=2019-02-10&page=2`);
   const r = await fetch(sign(url));
-  const t = await r.text();
-  console.log(t);
+  const t = await r.json();
+  const commissions = t.commissions
+  const ps = commissions.filter(_ => _.click_details.page_url !== null)
+  console.log(ps);
+  console.log(ps.length)
+  console.log(commissions.length)
+  console.log(JSON.stringify(t))
 
   return;
 };
@@ -25,6 +30,5 @@ export const getSkim = async () => {
 const sign = (url: string) => {
   const timestamp = moment().unix();
   const token = md5(`${timestamp}${privateKey}`);
-  console.log(token);
   return `${url}?timestamp=${timestamp}&token=${token}`;
 };
