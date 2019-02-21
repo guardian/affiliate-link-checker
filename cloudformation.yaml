@@ -29,7 +29,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: !Sub ${App}-${Stage}
-      Description: Checks the status of Kindle publication and sends emails
+      Description: Checks what articles have affiliate links and whether they get clicked
       Runtime: nodejs8.10
       Handler: lambda.handler
       MemorySize: 128

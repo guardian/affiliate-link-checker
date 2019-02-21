@@ -12,23 +12,32 @@ const md5 = (s: string): string =>
     .update(s)
     .digest("hex");
 
-export const getSkim = async () => {
-  const url = `${endpoint}/${accountType}/${accountId}/commission-report`;
-  console.log(`${sign(url)}&start_date=2019-02-10&page=2`);
-  const r = await fetch(sign(url));
-  const t = await r.json();
-  const commissions = t.commissions
-  const ps = commissions.filter(_ => _.click_details.page_url !== null)
-  console.log(ps);
-  console.log(ps.length)
-  console.log(commissions.length)
-  console.log(JSON.stringify(t))
+export const getSkim = async (start: string) => {
+  const format = "YYYY-MM-DD";
+  const startDate = moment(start).format(format);
 
-  return;
+  const url = `${endpoint}/${accountType}/${accountId}/commission-report?${sign()}&updated_since=${startDate}`;
+
+  return JSON.stringify(getPages(url), null, 2);
 };
 
-const sign = (url: string) => {
+const getPages = async (url: string, offset: number = 0): Promise<any[]> => {
+  const limit = 100;
+  const response = await fetch(`${url}&limit=${limit}&offset=${offset}`);
+  const parsed = await response.json();
+  const hasNext =
+    "pagination" in parsed &&
+    "has_next" in parsed.pagination &&
+    parsed.pagination.has_next;
+  const commissions = "commissions" in parsed && parsed.commissions;
+  if (!hasNext) {
+    return commissions;
+  }
+  return [...commissions, ...(await getPages(url, offset + limit))];
+};
+
+const sign = () => {
   const timestamp = moment().unix();
   const token = md5(`${timestamp}${privateKey}`);
-  return `${url}?timestamp=${timestamp}&token=${token}`;
+  return `timestamp=${timestamp}&token=${token}`;
 };

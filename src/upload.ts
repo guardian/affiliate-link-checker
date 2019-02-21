@@ -3,15 +3,16 @@ import * as moment from "moment";
 
 const s3 = new S3({ region: "eu-west-1" });
 export const upload = async (
-  content: string,
-  date: moment.Moment
+  path: string,
+  date: moment.Moment,
+  content: string
 ): Promise<any> => {
-  const Key = date.format("YYYY-MM-DD") + ".csv";
+  const Key = `${path}/${date.format("YYYY-MM-DD")}-${moment().unix()}.csv`;
   const Bucket = "ophan-raw-affiliate-link";
 
   if (await exists({ Key, Bucket })) {
-    console.log("File is already in S3");
-    throw new Error("Output file already exists in S3");
+    console.log("File is already in S3", Key);
+    throw new Error("File is already in S3");
   }
   console.log("Uploading to", Key, Bucket);
 

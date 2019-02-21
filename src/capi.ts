@@ -48,7 +48,7 @@ export const checkArticleForLinks = async (
     // console.log("Fetching article", id);
     const resp = await fetch(`https://www.theguardian.com/${id}.json`);
     const body = await resp.text();
-    console.log("Fetched", id, body.length);
+    // console.log("Fetched", id, body.length);
     return body.includes("go.theguardian.com") ? id : false;
     // return body.includes("This article contains affiliate links, which means we may earn a small commission if a reader clicks through and makes a purchase") ? id : false;
   } catch (error) {
