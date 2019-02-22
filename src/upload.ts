@@ -7,7 +7,7 @@ export const upload = async (
   date: moment.Moment,
   content: string
 ): Promise<any> => {
-  const Key = `${path}/${date.format("YYYY-MM-DD")}-${moment().unix()}.csv`;
+  const Key = `${path}/${date.format("YYYY-MM-DD")}-${moment().unix()}`;
   const Bucket = "ophan-raw-affiliate-link";
 
   if (await exists({ Key, Bucket })) {

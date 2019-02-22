@@ -24,6 +24,12 @@ Parameters:
   CapiKey:
     Description: CAPI Key
     Type: String
+  UserID:
+    Description: ID for skimlinks user
+    Type: String
+  PK:
+    Description: Private key for skimlinks user
+    Type: String
 Resources:
   Lambda:
     Type: AWS::Serverless::Function
@@ -38,6 +44,8 @@ Resources:
         Variables:
           Stage: !Ref Stage
           CAPIKEY: !Ref CapiKey
+          pk: !ref PK
+          user: !ref UserID
       CodeUri:
         Bucket: !Ref DeployBucket
         Key: !Sub ${Stack}/${Stage}/${App}/${App}.zip

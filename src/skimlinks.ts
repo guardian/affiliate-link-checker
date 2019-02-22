@@ -17,8 +17,8 @@ export const getSkim = async (start: string) => {
   const startDate = moment(start).format(format);
 
   const url = `${endpoint}/${accountType}/${accountId}/commission-report?${sign()}&updated_since=${startDate}`;
-
-  return JSON.stringify(getPages(url), null, 2);
+  
+  return JSON.stringify(await getPages(url), null, 2);
 };
 
 const getPages = async (url: string, offset: number = 0): Promise<any[]> => {
