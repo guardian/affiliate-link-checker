@@ -44,8 +44,8 @@ Resources:
         Variables:
           Stage: !Ref Stage
           CAPIKEY: !Ref CapiKey
-          pk: !ref PK
-          user: !ref UserID
+          pk: !Ref PK
+          user: !Ref UserID
       CodeUri:
         Bucket: !Ref DeployBucket
         Key: !Sub ${Stack}/${Stage}/${App}/${App}.zip
