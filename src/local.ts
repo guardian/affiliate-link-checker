@@ -6,7 +6,7 @@ AWS.config.update({
 });
 
 const run = async () => {
-  await handler({ date: "2018-07-03" });
+  await handler({ date: "2019-02-19" });
 };
 
 run();

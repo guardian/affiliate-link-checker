@@ -24,12 +24,18 @@ Parameters:
   CapiKey:
     Description: CAPI Key
     Type: String
+  UserID:
+    Description: ID for skimlinks user
+    Type: String
+  PK:
+    Description: Private key for skimlinks user
+    Type: String
 Resources:
   Lambda:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: !Sub ${App}-${Stage}
-      Description: Checks the status of Kindle publication and sends emails
+      Description: Checks what articles have affiliate links and whether they get clicked
       Runtime: nodejs8.10
       Handler: lambda.handler
       MemorySize: 128
@@ -38,6 +44,8 @@ Resources:
         Variables:
           Stage: !Ref Stage
           CAPIKEY: !Ref CapiKey
+          pk: !ref PK
+          user: !ref UserID
       CodeUri:
         Bucket: !Ref DeployBucket
         Key: !Sub ${Stack}/${Stage}/${App}/${App}.zip

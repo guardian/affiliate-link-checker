@@ -1,5 +1,6 @@
 import * as moment from "moment";
 import { capiURL, checkArticleForLinks, getArticles } from "./capi";
+import { getSkim } from "./skimlinks";
 import { upload } from "./upload";
 
 export const handler = async (event: { date?: string }): Promise<void> => {
@@ -25,13 +26,19 @@ export const handler = async (event: { date?: string }): Promise<void> => {
     },
     date
   );
+  const comissions = getSkim(date.format("YYYY-MM-DD"));
+
   const articles = await getArticles(endpoint);
   const withLinks = (await Promise.all(
     articles.map(checkArticleForLinks)
   )).filter(_ => _);
-  const output = withLinks.join("\n");
+  const pagesWithLinks = withLinks.join("\n");
 
-  await upload(output, date);
+  const pagesUpload = upload("pages", date, pagesWithLinks);
+  const uploadComissions = upload("comissions", date, await comissions);
+  await pagesUpload;
+  await uploadComissions;
+  return;
 };
 
 const parseDate = (event: { date?: string }): moment.Moment | null => {
