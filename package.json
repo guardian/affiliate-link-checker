@@ -9,7 +9,7 @@
     "async-sema": "^2.1.4",
     "aws-sdk": "^2.345.0",
     "moment": "2.22.2",
-    "node-fetch": "^2.2.0"
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "@types/node": "^10.12.1",
